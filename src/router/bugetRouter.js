@@ -5,6 +5,7 @@ const getBudgets = require("../controller/budgetCtrls/getbudgetCtrls");
 const getBudgetStatus = require("../controller/budgetCtrls/getbudgetStatus");
 const updateBudget = require("../controller/budgetCtrls/updateBudget");
 const budgetRouter = express.Router();
+
 budgetRouter.get("/budget", authMiddleware, getBudgets);
 budgetRouter.post("/budget", authMiddleware, setBudget);
 budgetRouter.get("/budget/status", authMiddleware, getBudgetStatus);
