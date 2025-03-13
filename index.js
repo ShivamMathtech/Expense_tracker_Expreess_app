@@ -19,11 +19,11 @@ app.use("/api", expenseRouter);
 app.use("/api", incomeRouter);
 app.use("/api", reportRouter);
 app.use("/api", budgetRouter);
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "src/frontend/", "index.html"));
-});
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "src/frontend/", "login.html"));
+});
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "src/frontend/", "index.html"));
 });
 
 const port = process.env.PORT_NO || 3000;
