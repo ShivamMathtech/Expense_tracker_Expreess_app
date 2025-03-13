@@ -1,28 +1,35 @@
 const Expense = require("../../model/Expense");
+const Budget = require("../../model/budget");
 const addExpenseCtrls = async (req, res) => {
   try {
-    const { amount, category, description } = req.body;
-    if (!amount || !category) {
-      return res
-        .status(400)
-        .json({ message: "Amount and category are required." });
-    }
-    const newExpense = new Expense({
-      user: req.user._id, // From authMiddleware
-      amount,
-      category,
-      description,
-    });
+    const { category, amount } = req.body;
 
-    await newExpense.save();
-    res
-      .status(201)
-      .json({ message: "Expense added successfully!", expense: newExpense });
-  } catch (error) {
-    res.status(500).json({
-      msg: "Inernal Server Error",
-      error: error.message,
+    const budget = await Budget.findOne({ user: req.user._id, category });
+
+    if (budget) {
+      const totalSpent = await Expense.aggregate([
+        { $match: { user: req.user._id, category } },
+        { $group: { _id: "$category", total: { $sum: "$amount" } } },
+      ]);
+
+      const spent = totalSpent[0]?.total || 0;
+      const newTotal = spent + amount;
+
+      if (newTotal > budget.limit) {
+        return res
+          .status(400)
+          .json({ message: `Budget exceeded for ${category}` });
+      }
+    }
+
+    const expense = await Expense.create({
+      user: req.user._id,
+      category,
+      amount,
     });
+    res.status(201).json({ message: "Expense added", expense });
+  } catch (error) {
+    res.status(500).json({ message: "Error adding expense", error });
   }
 };
 

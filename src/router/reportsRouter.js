@@ -1,0 +1,10 @@
+const express = require("express");
+const authMiddleware = require("../middleware/authMiddleware");
+const summaryCtrls = require("../controller/reportCtrls/summaryCtrls");
+const getMonthlyReport = require("../controller/reportCtrls/monthlyReportsCtrls");
+const getCategoryWiseCtrls = require("../controller/reportCtrls/categoryCtrls");
+const reportRouter = express.Router();
+reportRouter.get("/reports/summary", authMiddleware, summaryCtrls);
+reportRouter.get("/reports/monthly/:year", authMiddleware, getMonthlyReport);
+reportRouter.get("/reports/category", authMiddleware, getCategoryWiseCtrls);
+module.exports = reportRouter;
