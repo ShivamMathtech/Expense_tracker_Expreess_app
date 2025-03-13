@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/public/css/styles.css" />
   </head>
   <body>
     <div class="container-fluid main-page p-0">
@@ -18,30 +17,11 @@
         <div
           class="col-md-6 p-0 form-side d-flex justify-content-center align-items-center"
         >
-          <div class="form-box text-center">
-            <form method="post" id="signForm" action="/">
+          <div class="form-box text-center sign-in">
+            <form id="loginForm">
               <h5><b>ExpenseManger</b></h5>
-              <h6>Create Account</h6>
-              <div class="form-group mb-3">
-                <input
-                  type="text"
-                  name="first_name"
-                  id="first_name"
-                  class="form-control"
-                  placeholder="First Name"
-                  required
-                />
-              </div>
-              <div class="form-group mb-3">
-                <input
-                  type="text"
-                  name="last_name"
-                  id="last_name"
-                  class="form-control"
-                  placeholder="Last Name"
-                  required
-                />
-              </div>
+              <h6>Sign Into Your Account</h6>
+
               <div class="form-group mb-3">
                 <input
                   type="email"
@@ -49,7 +29,7 @@
                   id="email"
                   class="form-control"
                   required
-                  placeholder="Email"
+                  placeholder="Email Address"
                 />
                 <p class="text-white bg-danger mt-1" id="error_msg"></p>
               </div>
@@ -66,8 +46,8 @@
               <button class="btn btn-warning w-100">Signup</button>
               <div class="form-group m-2">
                 <p>
-                  Already a having account?
-                  <a href="/login.html">Login </a>here..
+                  Don't have an account?
+                  <a href="/index.html">Register </a>here..
                 </p>
               </div>
             </form>
@@ -84,6 +64,6 @@
         </div>
       </div>
     </div>
-    <script src="/js/script.js"></script>
+    <script src="public/js/login.js"></script>
   </body>
 </html>

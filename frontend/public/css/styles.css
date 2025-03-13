@@ -13,7 +13,7 @@
   height: 50%;
 }
 .image-side {
-  background-image: url("/img/bg.jpg");
+  background-image: url("../img/bg.jpg");
   background-position: center;
   background-size: cover;
 }
