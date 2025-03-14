@@ -119,17 +119,82 @@
                     <th>Category</th>
                     <th>Amount</th>
                     <th>Description</th>
-                    <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody id="expenseTableBody">
+                <tbody id="expenseTableBody-1">
                   <!-- Data will be inserted dynamically -->
                 </tbody>
               </table>
             </div>
           </div>
         </section>
-        <section class="expense-section" id="expense-section"></section>
+        <section class="expense-section p-4" id="expense-section">
+          <div class="container mt-4">
+            <h2 class="text-center text-white">Expense Tracker</h2>
+            <!-- Add Expense Form -->
+            <div class="card p-3 shadow-lg">
+              <h4>Add Expense</h4>
+              <form id="expenseForm">
+                <div class="mb-2">
+                  <input type="date" id="date" class="form-control" required />
+                </div>
+                <div class="mb-2">
+                  <input
+                    type="text"
+                    id="category"
+                    class="form-control"
+                    placeholder="Category"
+                    required
+                  />
+                </div>
+                <div class="mb-2">
+                  <input
+                    type="number"
+                    id="amount"
+                    class="form-control"
+                    placeholder="Amount"
+                    required
+                  />
+                </div>
+                <div class="mb-2">
+                  <input
+                    type="text"
+                    id="description"
+                    class="form-control"
+                    placeholder="Description"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Add Expense
+                </button>
+              </form>
+            </div>
+
+            <!-- Expense List -->
+            <div class="card-1 mt-4 p-3 shadow-lg">
+              <h4>Expense History</h4>
+              <div class="table-responsive scroll-container">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Date</th>
+                      <th>Category</th>
+                      <th>Amount</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="expenseTableBody">
+                    <!-- Data will be dynamically inserted -->
+                  </tbody>
+                </table>
+              </div>
+              <h5 class="text-end mt-2">
+                Total Expense: ₹<span id="totalExpense">0</span>
+              </h5>
+            </div>
+          </div>
+        </section>
         <section class="income-section" id="income-section"></section>
         <section class="reports-section" id="reports-section"></section>
       </div>

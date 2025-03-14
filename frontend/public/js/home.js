@@ -59,12 +59,119 @@ document.addEventListener("DOMContentLoaded", () => {
   })
     .then((response) => response.json())
     .then((expenses) => {
-      console.log(expenses);
-      const tableBody = document.querySelector("#expenseTableBody");
+      const tableBody = document.querySelector("#expenseTableBody-1");
       tableBody.innerHTML = ""; // Clear existing rows
 
       expenses.expense.forEach((expense) => {
-        console.log(expense._id);
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                <td>${new Date(expense.date).toLocaleDateString()}</td>
+                <td>${expense.category}</td>
+                <td>₹${expense.amount}</td>
+                <td>${expense.description}</td>
+                
+            `;
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((error) => console.error("Error fetching expenses:", error));
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadExpenses();
+});
+
+// Handle Form Submission
+document.getElementById("expenseForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please log in first!");
+    return;
+  }
+
+  const expenseData = {
+    date: document.getElementById("date").value,
+    category: document.getElementById("category").value,
+    amount: parseFloat(document.getElementById("amount").value),
+    description: document.getElementById("description").value,
+  };
+  console.log(expenseData);
+  fetch("http://localhost:5000/api/expenses", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(expenseData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Expense added successfully!");
+      loadExpenses();
+    })
+    .catch((error) => console.error("Error adding expense:", error));
+});
+document.addEventListener("DOMContentLoaded", () => {
+  loadExpenses();
+});
+
+// Handle Form Submission
+document.getElementById("expenseForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please log in first!");
+    return;
+  }
+
+  const expenseData = {
+    date: document.getElementById("date").value,
+    category: document.getElementById("category").value,
+    amount: parseFloat(document.getElementById("amount").value),
+    description: document.getElementById("description").value,
+  };
+
+  fetch("http://localhost:5000/api/expenses", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(expenseData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Expense added successfully!");
+      loadExpenses();
+    })
+    .catch((error) => console.error("Error adding expense:", error));
+});
+
+// Fetch and Load Expenses
+function loadExpenses() {
+  const token = localStorage.getItem("token");
+
+  fetch("http://localhost:5000/api/expenses", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((expenses) => {
+      const tableBody = document.getElementById("expenseTableBody");
+      const totalExpenseEl = document.getElementById("totalExpense");
+      let totalExpense = 0;
+
+      tableBody.innerHTML = "";
+
+      expenses.expense.forEach((expense) => {
+        totalExpense += expense.amount;
+
         const row = document.createElement("tr");
         row.innerHTML = `
                 <td>${new Date(expense.date).toLocaleDateString()}</td>
@@ -82,9 +189,13 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         tableBody.appendChild(row);
       });
+
+      totalExpenseEl.textContent = totalExpense;
     })
     .catch((error) => console.error("Error fetching expenses:", error));
-});
+}
+
+// Delete Expense
 function deleteExpense(expenseId) {
   const token = localStorage.getItem("token");
 
@@ -97,9 +208,13 @@ function deleteExpense(expenseId) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       alert("Expense deleted successfully!");
-      location.reload(); // Refresh table
+      loadExpenses();
     })
     .catch((error) => console.error("Error deleting expense:", error));
+}
+
+// Edit Expense (Redirect)
+function editExpense(expenseId) {
+  window.location.href = `/edit-expense.html?id=${expenseId}`;
 }
