@@ -19,8 +19,7 @@ signForm.addEventListener("submit", async (e) => {
     let error_msg = document.getElementById("error_msg");
     error_msg.style.display = "none";
     if (response.ok) {
-      alert("Signup Successful! Redirecting to login...");
-
+      localStorage.setItem("token", data.token);
       window.location.href = "login.html"; // Redirect after signup
     } else {
       //   alert(data.msg || "Signup Failed");

@@ -2,7 +2,7 @@ const Expense = require("../../model/Expense");
 const Budget = require("../../model/budget");
 const addExpenseCtrls = async (req, res) => {
   try {
-    const { category, amount } = req.body;
+    const { category, amount, description, date } = req.body;
 
     const budget = await Budget.findOne({ user: req.user._id, category });
 
@@ -26,6 +26,8 @@ const addExpenseCtrls = async (req, res) => {
       user: req.user._id,
       category,
       amount,
+      description,
+      date,
     });
     res.status(201).json({ message: "Expense added", expense });
   } catch (error) {

@@ -18,10 +18,9 @@ const getMonthlyReport = async (req, res) => {
           },
         },
       },
-      { $group: { _id: { $month: "$createdAt" }, total: { $sum: "$amount" } } },
+      { $group: { _id: { $month: "$date" }, total: { $sum: "$amount" } } },
       { $sort: { _id: 1 } },
     ]);
-
     const monthlyExpense = await Expense.aggregate([
       {
         $match: {
@@ -32,7 +31,7 @@ const getMonthlyReport = async (req, res) => {
           },
         },
       },
-      { $group: { _id: { $month: "$createdAt" }, total: { $sum: "$amount" } } },
+      { $group: { _id: { $month: "$date" }, total: { $sum: "$amount" } } },
       { $sort: { _id: 1 } },
     ]);
 

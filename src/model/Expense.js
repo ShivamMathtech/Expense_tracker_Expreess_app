@@ -26,7 +26,7 @@ const ExpenseSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    trim: true,
+    required: true,
   },
   date: {
     type: Date,
