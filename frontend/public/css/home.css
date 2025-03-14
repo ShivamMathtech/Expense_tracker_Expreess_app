@@ -1,0 +1,75 @@
+.main-container {
+  height: 100vh;
+  background-color: aqua;
+}
+.sidebar-section {
+  height: 100%;
+  background-color: #1a2131;
+  color: #fff;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+  position: relative;
+}
+.sidebar-sectionsection::-webkit-scrollbar {
+  display: none;
+}
+.content-section {
+  height: 100%;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+  position: relative;
+}
+.content-section::-webkit-scrollbar {
+  display: none;
+}
+section {
+  height: calc(100vh - 50px);
+  background-color: #f6f7fce5;
+  border-bottom: 2px solid #000000;
+}
+#header {
+  height: 50px;
+  background-color: #fff;
+  width: 100%;
+  position: sticky;
+  top: 0px;
+}
+.sidebar-header {
+  height: 20vh;
+  border-bottom: 2px solid #fff;
+}
+.text p {
+  font-size: 10px;
+}
+.nav-link {
+  color: #fff;
+}
+.nav-link:hover {
+  color: #fff;
+}
+.nav-item {
+  padding: 5px;
+}
+.nav-item:hover {
+  background-color: #686c77;
+}
+
+.card {
+  height: 150px;
+}
+
+.scroll-container {
+  max-height: 270px; /* Limit height for scrolling */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}

@@ -24,7 +24,7 @@ document
       if (response.ok) {
         // Store the token in localStorage
         localStorage.setItem("token", data.token);
-        alert("Login Successful! Redirecting...");
+        // alert("Login Successful! Redirecting...");
         window.location.href = "home.html"; // Redirect to dashboard
       } else {
         error_msg.textContent = data.msg || "Login Failed!";
