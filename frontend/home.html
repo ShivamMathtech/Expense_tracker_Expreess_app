@@ -56,13 +56,67 @@
             >
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#budget-section">
+              <span class="me-2 bi bi-graph-down"></span>Budget</a
+            >
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#" onclick="logout()">
               <span class="me-2 bi bi-box-arrow-right"></span>logout</a
             >
           </li>
         </ul>
       </div>
-
+      <!-- Expense View -->
+      <div
+        class="modal fade"
+        id="ExpenseModel"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Expense Details
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <h6>
+                Expense Id <span class="text-warning ms-2" id="eId"></span>
+              </h6>
+              <h6>
+                Expense Description
+                <span class="text-warning ms-2" id="edis"></span>
+              </h6>
+              <h6>
+                Expense Ammount
+                <span class="text-warning ms-2" id="eamt"></span>
+              </h6>
+              <h6>
+                Expense Category
+                <span class="text-warning ms-2" id="ecat"></span>
+              </h6>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-md-10 content-section p-0">
         <header id="header" class="p-0">
           <div class="row m-0 h-100">
@@ -161,9 +215,6 @@
                 </button>
               </div>
             </div>
-
-            <!-- Add Expense Form -->
-            <!-- Modal -->
             <div
               class="modal fade"
               id="exampleModal"
@@ -195,13 +246,27 @@
                         />
                       </div>
                       <div class="mb-2">
-                        <input
+                        <!-- <input
                           type="text"
                           id="category"
                           class="form-control"
                           placeholder="Category"
                           required
-                        />
+                        /> -->
+                        <select
+                          class="form-select"
+                          aria-label="Select Category"
+                          id="category"
+                          required
+                        >
+                          <option selected value="Others">Others</option>
+                          <option value="Food">Food</option>
+                          <option value="Transport">Transport</option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Bills">Bills</option>
+                          <option value="Health">Health</option>
+                          <option value="Education">Education</option>
+                        </select>
                       </div>
                       <div class="mb-2">
                         <input
@@ -220,7 +285,11 @@
                           placeholder="Description"
                         />
                       </div>
-                      <button type="submit" class="btn btn-primary w-100">
+                      <button
+                        type="submit"
+                        class="btn btn-primary w-100"
+                        data-bs-dismiss="modal"
+                      >
                         Add Expense
                       </button>
                     </form>
@@ -237,7 +306,6 @@
                 </div>
               </div>
             </div>
-            <!-- Expense List -->
             <div class="card-1 mt-4 p-3 shadow-lg">
               <h4>Expense History</h4>
               <div class="table-responsive scroll-container">
@@ -262,8 +330,48 @@
             </div>
           </div>
         </section>
-        <section class="income-section" id="income-section"></section>
+        <section class="income-section p-2" id="income-section">
+          <div class="cotainer">
+            <div class="row m-0">
+              <div class="col-md-6">
+                <h3 class="">Income Mangement Pannel</h3>
+              </div>
+              <div class="col-md-6">
+                <button
+                  class="btn btn-outline-secondary rounded-0 float-end"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Add Income
+                </button>
+              </div>
+            </div>
+            <div class="card-1 mt-4 p-3 shadow-lg">
+              <h4>Expense History</h4>
+              <div class="table-responsive scroll-container">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Date</th>
+                      <th>Amount</th>
+                      <th>Source</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="incomeTableBody">
+                    <!-- Data will be dynamically inserted -->
+                  </tbody>
+                </table>
+              </div>
+              <h5 class="text-end mt-2">
+                Total Income: ₹<span id="totalIncome">0</span>
+              </h5>
+            </div>
+          </div>
+        </section>
         <section class="reports-section" id="reports-section"></section>
+        <section class="budget-section" id="budget-section"></section>
       </div>
     </div>
   </div>

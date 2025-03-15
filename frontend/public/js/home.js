@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   loadExpenses();
+  loadIncome();
   const token = localStorage.getItem("token");
   if (!token) {
     window.location.href = "/login.html"; // Redirect to login if no token
@@ -117,7 +118,7 @@ function reports() {
         localStorage.removeItem("token");
         return;
       }
-      console.log();
+      // console.log();
       document.getElementById("mon_income").textContent =
         data.monthlyIncome[0].total;
       document.getElementById("mon_Expense").textContent =
@@ -135,7 +136,7 @@ function getRandomColor() {
   return color;
 }
 // Section 2 handler
-
+// Add Expense Handler
 document.getElementById("expenseForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -151,7 +152,7 @@ document.getElementById("expenseForm").addEventListener("submit", function (e) {
     amount: parseFloat(document.getElementById("amount").value),
     description: document.getElementById("description").value,
   };
-  console.log(expenseData);
+
   fetch("http://localhost:5000/api/expenses", {
     method: "POST",
     headers: {
@@ -162,7 +163,6 @@ document.getElementById("expenseForm").addEventListener("submit", function (e) {
   })
     .then((response) => response.json())
     .then((data) => {
-      // alert("Expense added successfully!");
       loadExpenses();
       reports();
     })
@@ -200,10 +200,13 @@ function loadExpenses() {
                 <td>
                     <button class="btn btn-warning btn-sm" onclick="editExpense('${
                       expense._id
-                    }')">Edit</button>
+                    }')">Update</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteExpense('${
                       expense._id
                     }')">Delete</button>
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ExpenseModel" onclick="viewExpenseById('${
+                      expense._id
+                    }')">View</button>
                 </td>
             `;
         tableBody.appendChild(row);
@@ -234,11 +237,98 @@ function deleteExpense(expenseId) {
 }
 
 // Edit Expense (Redirect)
-function editExpense(expenseId) {
-  window.location.href = `/edit-expense.html?id=${expenseId}`;
+// function editExpense(expenseId) {
+//   window.location.href = `/edit-expense.html?id=${expenseId}`;
+// }
+// View Expense By Id
+function viewExpenseById(expenseId) {
+  const token = localStorage.getItem("token");
+
+  fetch(`http://localhost:5000/api/expenses/${expenseId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("eId").textContent = data._id;
+      document.getElementById("edis").textContent = data.description;
+      document.getElementById("eamt").textContent = data.amount;
+      document.getElementById("ecat").textContent = data.category;
+    })
+    .catch((error) => console.error("Error deleting expense:", error));
 }
 function logout() {
   localStorage.removeItem("token"); // Remove token
   localStorage.removeItem("user"); // Remove user details
   window.location.href = "login.html"; // Redirect to login page
+}
+function incomeHandler() {}
+
+// function addIncome() {
+//   const token = localStorage.getItem("token");
+//   fetch("http://localhost:5000/api/income", {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       if (data.msg === "Invalid token") {
+//         alert("Session expired. Please login again.");
+//         localStorage.removeItem("token");
+//         return;
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("Error Adding the Income");
+//     });
+// }
+function loadIncome() {
+  const token = localStorage.getItem("token");
+  fetch("http://localhost:5000/api/income", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((income) => {
+      const tableBody = document.getElementById("incomeTableBody");
+      const totalIncomeEl = document.getElementById("totalIncome");
+      let totalIncome = 0;
+      tableBody.innerHTML = "";
+
+      income.income.forEach((income) => {
+        totalIncome += income.amount;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                <td>${new Date(income.date).toLocaleDateString()}</td>
+                <td>${income.amount}</td>
+                <td>₹${income.source}</td>
+                <td>${income.description}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="editExpense('${
+                      income._id
+                    }')">Update</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteExpense('${
+                      income._id
+                    }')">Delete</button>
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ExpenseModel" onclick="viewExpenseById('${
+                      income._id
+                    }')">View</button>
+                </td>
+            `;
+        tableBody.appendChild(row);
+      });
+
+      totalIncomeEl.textContent = totalIncome;
+    })
+    .catch((error) => console.error("Error fetching expenses:", error));
 }
